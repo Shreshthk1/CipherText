@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const registerController = require('./Controllers/ResgisterController')
-
+const loginController = require('./Controllers/LoginController')
 const app = express()
 const PORT = process.env.PORT || 5000
 
@@ -18,5 +18,6 @@ app.listen(PORT, () => {
 })
 
 registerController.register(app)
+loginController.login(app)
 
 
