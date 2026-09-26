@@ -1,10 +1,14 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-const registerController = require('./Controllers/ResgisterController')
-const loginController = require('./Controllers/LoginController')
 const app = express()
 const PORT = process.env.PORT || 5000
+
+
+const registerController = require('./Controllers/ResgisterController')
+const loginController = require('./Controllers/LoginController')
+const userController = require('./Controllers/UserController')
+
 
 app.use(cors())
 app.use(express.json())
@@ -19,5 +23,8 @@ app.listen(PORT, () => {
 
 registerController.register(app)
 loginController.login(app)
+userController.getUserKey(app)
+userController.getUsers(app)
+userController.purgeUsers(app)
 
 
