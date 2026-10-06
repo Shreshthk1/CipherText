@@ -27,7 +27,7 @@ const loadKey = async (username) => {
     const db = await openDB();
     return new Promise((resolve, reject) => {
         const req = db.transaction(STORE, "readonly").objectStore(STORE).get(username);
-        req.onsuccess = () => resolve(req.result?.key); // <-- unwrap .key
+        req.onsuccess = () => resolve(req.result?.key);
         req.onerror = () => reject(req.error);
     });
 }

@@ -5,14 +5,25 @@ const Register = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [qrCodeDataURL, setQrCodeDataURL] = useState(null);
+    const [is2FASetup, setIs2FASetup] = useState(false);
 
     const onSubmit = async (e) => {
         e.preventDefault();
         let res = await GenerateKeys(username, password);
         if (res.ok) {
-            alert('User registered successfully!');
-            window.location.href = '/';
-        } else if (res.status === 409) {
+            fetch('/api/2fa/setup?username=' + username, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(res => res.json()).then(data => {
+              console.log(data.qrCodeDataURL)
+                setQrCodeDataURL(data.qrCodeDataURL);
+                setIs2FASetup(true);
+            })
+              } 
+             else if (res.status === 409) {
             alert('Username is already taken. Please choose a different username.');
         }
     }
@@ -64,6 +75,17 @@ const Register = () => {
       </button>
     </form>
   </div>
+  
+    {is2FASetup && (
+      <div className="absolute w-full h-full bg-black bg-opacity-50">
+      <div className="flex flex-col items-center justify-center h-full">
+        <h2 className="text-white text-lg mb-4">Scan this QR code with your authenticator app</h2>  
+        <img src={qrCodeDataURL} alt="QR Code" className="mb-4" />
+        <Link to="/" className="bg-white text-black px-4 py-2 rounded-lg">Proceed to Login</Link>
+      </div>
+      </div>
+    )}
+  
 </main>
     )
 }

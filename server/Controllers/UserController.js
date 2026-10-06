@@ -9,19 +9,6 @@ const getUsers = (app) => {
     )
 }
 
-const purgeUsers = (app) => {
-    app.delete("/api/users/purge", async (req, res) => {
-        try {
-            await pool.query("DELETE FROM users");
-            res.status(200).json({ message: "All users deleted" });
-        }
-        catch (err) {
-            console.error(err);
-            res.status(500).json({ error: "server error" });
-        }
-    })
-}
-
 
 const getUserKey = (app) => {
     app.get("/api/user/:id/publicKey", async (req, res) => {
