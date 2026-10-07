@@ -17,7 +17,6 @@ const login =  (app) => {
     );
     const user = result.rows[0];
 
-    // Same error for "no such user" and "wrong password" — never reveal which.
     if (!user) return res.status(401).json({ error: "invalid username or password" });
 
     const isCorrect = await bcrypt.compare(password, user.password_hash);
