@@ -23,4 +23,4 @@ const getUserKey = (app) => {
     })
 }
 
-module.exports = { getUsers, getUserKey, purgeUsers }
+module.exports = { getUsers, getUserKey }
